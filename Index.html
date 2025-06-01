@@ -1,0 +1,84 @@
+import React, { useState, useEffect } from "react";
+
+const App = () => {
+  const [showMessage, setShowMessage] = useState(false);
+  const [confetti, setConfetti] = useState([]);
+
+  // Membuat efek confetti
+  useEffect(() => {
+    const newConfetti = [];
+    for (let i = 0; i < 100; i++) {
+      newConfetti.push({
+        id: i,
+        left: Math.random() * 100 + "%",
+        top: Math.random() * -200 + "px",
+        size: Math.random() * 8 + 4 + "px",
+        delay: Math.random() * 2 + "s",
+        duration: Math.random() * 3 + 3 + "s",
+        color: `hsl(${Math.random() * 360}, 80%, 60%)`,
+      });
+    }
+    setConfetti(newConfetti);
+  }, []);
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-pink-200 via-purple-300 to-indigo-400 flex items-center justify-center px-4">
+      <div className="max-w-md w-full text-center space-y-8 animate-fadeIn">
+        <h1 className="text-5xl md:text-6xl font-extrabold text-white drop-shadow-lg">
+          Selamat Ulang Tahun, Jelita! 🎉
+        </h1>
+
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-2xl p-6 transform transition-all hover:scale-105 duration-300">
+          <img
+            src="https://picsum.photos/seed/birthday/400/200"
+            alt="Birthday banner"
+            className="w-full h-48 object-cover rounded-lg mb-6"
+          />
+          <p className="text-gray-700 text-lg mb-6">
+            Semoga hari ini dan tahun-tahun mendatang dipenuhi tawa, kebahagiaan, dan semua hal yang kamu impikan.
+            Tetap menjadi sosok jelita yang selalu ceria dan menginspirasi!
+          </p>
+          <button
+            onClick={() => setShowMessage(!showMessage)}
+            className="mt-4 bg-gradient-to-r from-pink-500 to-purple-600 text-white py-2 px-6 rounded-full font-semibold shadow-lg hover:shadow-xl transform hover:-translate-y-1 transition duration-300"
+          >
+            {showMessage ? "Sembunyikan Harapan" : "Lihat Harapan"}
+          </button>
+
+          {showMessage && (
+            <div className="mt-6 text-left text-sm text-gray-600 space-y-2 animate-fadeIn">
+              <p>✨ Kamu cantik di luar dan luar biasa di dalam.</p>
+              <p>🌟 Setiap hari bersamamu adalah hadiah tersendiri.</p>
+              <p>💖 Semoga semua mimpi mu menjadi nyata.</p>
+              <p>🎂 Selamat ulang tahun lagi, sahabatku!</p>
+            </div>
+          )}
+        </div>
+
+        <footer className="text-white text-sm opacity-90">© 2025 Ucapan Ulang Tahun untuk Jelita</footer>
+      </div>
+
+      {/* Confetti Elements */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
+        {confetti.map((piece) => (
+          <div
+            key={piece.id}
+            className="absolute rounded-full animate-confetti"
+            style={{
+              left: piece.left,
+              top: piece.top,
+              width: piece.size,
+              height: piece.size,
+              backgroundColor: piece.color,
+              animationDelay: piece.delay,
+              animationDuration: piece.duration,
+            }}
+          ></div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default App;
+      
